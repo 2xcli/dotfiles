@@ -1,0 +1,17 @@
+background-color = #1c2023dd
+outline-color = #00000000
+border-color = #88929955
+
+text-color = #dfe3e7ee
+prompt-color = #a8cbe0cc
+input-color = #dfe3e7ff
+placeholder-color = #88929999
+
+default-result-color = #dfe3e7cc
+alternate-result-color = #bec8cfcc
+
+selection-color = #c5e9ffff
+selection-background = #2a4d5f66
+selection-match-color = #a8cbe0ff
+
+text-cursor-color = #a8cbe0ff

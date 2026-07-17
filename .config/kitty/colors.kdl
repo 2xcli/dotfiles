@@ -1,0 +1,11 @@
+layout {
+    border {
+        active-color "#ffb1c6cc"
+        inactive-color "#a38a9040"
+        urgent-color "#9b0000"
+    }
+}
+
+overview {
+    backdrop-color "#271d1f90"
+}

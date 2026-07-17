@@ -1,0 +1,89 @@
+#!/usr/bin/env bash
+set -u
+
+PROXY="socks5h://127.0.0.1:10808"
+
+STATE_DIR="$HOME/.local/state"
+WAYBAR="$STATE_DIR/netwatch-waybar.json"
+LOG="$STATE_DIR/netwatch.tsv"
+
+mkdir -p "$STATE_DIR"
+
+now="$(date '+%Y-%m-%d %H:%M:%S')"
+short_time="$(date '+%H:%M:%S')"
+
+GATEWAY="$(ip route | awk '/default/ {print $3; exit}')"
+
+ping_ok() {
+  ping -c 1 -W 2 "$1" >/dev/null 2>&1
+}
+
+curl_direct_ok() {
+  curl -4 -m 6 -sS "$1" >/dev/null 2>&1
+}
+
+curl_proxy_ok() {
+  curl -4 -m 8 --proxy "$PROXY" -sS "$1" >/dev/null 2>&1
+}
+
+gw="OK"
+ru="OK"
+out="OK"
+vpn="OK"
+
+class="ok"
+icon="󰖩"
+
+if [[ -z "$GATEWAY" ]] || ! ping_ok "$GATEWAY"; then
+  gw="BAD"
+  class="lan_bad"
+  icon="󰖪"
+else
+  curl_direct_ok "https://ya.ru" || ru="BAD"
+  curl_direct_ok "https://cloudflare.com/cdn-cgi/trace" || out="BAD"
+  curl_proxy_ok "https://cloudflare.com/cdn-cgi/trace" || vpn="BAD"
+
+  if [[ "$ru" == "BAD" || "$out" == "BAD" ]]; then
+    class="net_bad"
+    icon="󰖪"
+  elif [[ "$vpn" == "BAD" ]]; then
+    class="vpn_bad"
+    icon="󰖟"
+  fi
+fi
+
+printf '%s\t%s\t%s\t%s\t%s\t%s\n' \
+  "$now" "$gw" "$ru" "$out" "$vpn" "$class" >> "$LOG"
+
+tail -n 300 "$LOG" > "$LOG.tmp" && mv "$LOG.tmp" "$LOG"
+
+tooltip="$(
+  {
+    printf 'time      gw   ru   out  vpn\n'
+    tail -n 5 "$LOG" | tac | awk -F '\t' '{
+      split($1, t, " ");
+      printf "%-9s %-4s %-4s %-4s %-4s\n", t[2], $2, $3, $4, $5
+    }'
+  }
+)"
+
+python - "$WAYBAR" "$icon" "$class" "$tooltip" <<'PY'
+import json
+import sys
+
+path, text, cls, tooltip = sys.argv[1:5]
+
+with open(path, "w", encoding="utf-8") as f:
+    json.dump(
+        {
+            "text": text,
+            "class": cls,
+            "tooltip": tooltip,
+        },
+        f,
+        ensure_ascii=False,
+    )
+    f.write("\n")
+PY
+
+cat "$WAYBAR"

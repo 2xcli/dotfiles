@@ -1,0 +1,25 @@
+output_dir = "./transcripts"
+cache_dir = "~/.cache/vitext"
+keep_audio = false
+overwrite = false
+
+[whisper]
+backend = "voxtype"
+model = "/home/boris/.local/share/voxtype/models/ggml-large-v3.bin"
+language = "auto"
+device = "gpu"
+compute_type = "auto"
+download = true
+vad_filter = true
+
+[markdown]
+include_metadata = true
+include_timestamps = false
+
+[chunking]
+enabled = true
+threshold_secs = 600
+chunk_secs = 600
+overlap_secs = 5
+repeat_guard = true
+max_repeats = 8

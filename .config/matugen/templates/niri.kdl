@@ -1,0 +1,16 @@
+layout {
+    border {
+        active-color "{{colors.secondary.default.hex}}aa"
+        inactive-color "{{colors.outline.default.hex}}35"
+        urgent-color "#9b0000"
+    }
+
+    focus-ring {
+        active-color "{{colors.secondary.default.hex}}aa"
+        inactive-color "{{colors.outline.default.hex}}40"
+    }
+}
+
+overview {
+    backdrop-color "{{colors.surface_container.default.hex}}90"
+}

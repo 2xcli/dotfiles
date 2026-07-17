@@ -1,0 +1,14 @@
+font_size 15.0
+background_opacity 0.7
+# background #111111
+window_margin_width 8 12 12 12
+confirm_os_window_close 0
+enable_audio_bell no
+
+# BEGIN_KITTY_THEME
+# noirbuddy-oxide
+include current-theme.conf
+# END_KITTY_THEME
+shell_integration disabled
+#hide_window_decorations titlebar-only
+hide_window_decorations yes

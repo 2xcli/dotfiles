@@ -1,0 +1,66 @@
+{
+        "layer": "top",
+        "position": "top",
+        "reload_style_on_change": true,
+        "modules-left": ["clock","tray"],
+        "modules-center": ["niri/workspaces"],
+        "modules-right": ["custom/colorpicker","custom/netwatch","custom/voxtype",
+        "custom/volume","niri/language"],
+
+	"niri/language": {
+	    "format": "{}",
+	    "format-en": "EN",
+	    "format-ru": "RU",
+	    "on-click": "niri msg action switch-layout next"
+	    },
+        "custom/volume": {
+            "exec": "~/.config/waybar/scripts/volume.sh info",
+            "interval": 1,
+            "format": "{}",
+            "on-scroll-up": "~/.config/waybar/scripts/volume.sh increase",
+            "on-scroll-down": "~/.config/waybar/scripts/volume.sh decrease",
+            "on-click": "~/.config/waybar/scripts/volume.sh toggle_mute",
+            "on-click-right": "~/.config/waybar/scripts/volume.sh switch_device"
+            },
+        "niri/workspaces": {
+            "format": "{index}",
+	    "all-outputs": true,
+	    "hide-empty": true,
+            "format-icons": {
+                "active": "",
+                "default": "",
+                "empty": ""
+                },
+        "persistent-workspaces": {
+                "*": [ 1,2,3,4,5 ]
+                }
+            },
+        "clock": {
+            "format": "󰃰  {:%H:%M | %d.%m.%Y}",
+            "interval": 1
+            },
+        "tray": {
+            "icon-size": 20,
+            "spacing": 4
+            },
+	"custom/voxtype": {
+	    "exec": "voxtype status --follow --format json",
+	    "return-type": "json",
+	    "format": "{}",
+	    "tooltip": true
+            },
+        "custom/netwatch": {
+	    "exec": "cat ~/.local/state/netwatch-waybar.json 2>/dev/null || echo '{\"text\":\"NET ?\",\"class\":\"unknown\"}'",
+	    "return-type": "json",
+	    "interval": 5,
+ 	    "tooltip": true
+            },
+          "custom/colorpicker": {
+              "format": "{}",
+              "return-type": "json",
+              "interval": "once",
+              "exec": "~/.config/waybar/scripts/colorpicker.sh -j",
+              "on-click": "~/.config/waybar/scripts/colorpicker.sh",
+              "signal": 1
+            }
+}

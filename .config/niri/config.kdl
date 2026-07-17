@@ -1,0 +1,6 @@
+include "env.kdl"
+include "startup.kdl"
+include "settings.kdl"
+include "window-rules.kdl"
+include "binds.kdl"
+include "colors.kdl"

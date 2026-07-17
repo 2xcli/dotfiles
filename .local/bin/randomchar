@@ -1,0 +1,20 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+CHARS='abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*()_+=-[]{}:,.?'
+LEN=${#CHARS}
+
+# Максимальное значение, которое ровно делится на LEN
+LIMIT=$(( 256 / LEN * LEN ))
+
+while true; do
+    byte="$(od -An -N1 -tu1 /dev/urandom)"
+    byte="${byte// /}"
+
+    if (( byte < LIMIT )); then
+        idx=$(( byte % LEN ))
+        char="${CHARS:idx:1}"
+        wtype "$char"
+        exit 0
+    fi
+done

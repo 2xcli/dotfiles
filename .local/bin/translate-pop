@@ -1,0 +1,90 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+URL="http://127.0.0.1:5000/translate"
+
+TEXT="$(wl-paste --primary 2>/dev/null || true)"
+[ -z "${TEXT// }" ] && TEXT="$(wl-paste 2>/dev/null || true)"
+[ -z "${TEXT// }" ] && exit 1
+
+MAX_CHARS=350
+CHARS="$(printf '%s' "$TEXT" | wc -m | tr -d '[:space:]')"
+
+if [ "$CHARS" -gt "$MAX_CHARS" ]; then
+  exit 0
+fi
+
+
+if ! curl -s --max-time 1 http://127.0.0.1:5000/languages >/dev/null; then
+  systemctl --user start libretranslate.service 2>/dev/null || true
+  sleep 2
+fi
+
+if [[ "$TEXT" =~ [А-Яа-яЁё] ]]; then
+  FROM="ru"
+  TO="en"
+else
+  FROM="en"
+  TO="ru"
+fi
+
+OUT="$(
+  jq -n \
+    --arg q "$TEXT" \
+    --arg source "$FROM" \
+    --arg target "$TO" \
+    '{q:$q, source:$source, target:$target, format:"text"}' |
+  curl -s "$URL" \
+    -H "Content-Type: application/json" \
+    -d @- |
+  jq -r '.translatedText // .error // "Translation error"'
+)"
+
+TMP_SRC="$(mktemp)"
+TMP_OUT="$(mktemp)"
+trap 'rm -f "$TMP_SRC" "$TMP_OUT"' EXIT
+
+printf '%s\n' "$TEXT" > "$TMP_SRC"
+printf '%s\n' "$OUT" > "$TMP_OUT"
+kitty \
+  --class translate-popup \
+  --name translate-popup \
+  --title translate-popup \
+  -o background_opacity=0.94 \
+  -o font_size=16 \
+  bash -c '
+    cleanup() {
+      stty sane 2>/dev/null || true
+      printf "\033[?25h"
+    }
+    trap cleanup EXIT INT TERM
+
+    stty -echo -icanon min 1 time 0
+    printf "\033[?25l"
+    clear
+
+    printf "\033[2m"
+    fold -s -w 76 "$1"
+    printf "\033[0m"
+
+    printf "\n\n"
+
+    printf "\033[1m"
+    fold -s -w 76 "$2"
+    printf "\033[0m"
+
+    out="$(cat "$2")"
+
+    while true; do
+      IFS= read -rsn1 key || exit 0
+
+      case "$key" in
+        y|Y|н|Н)
+          printf "%s" "$out" | wl-copy >/dev/null 2>&1 &
+          ;;
+        *)
+          exit 0
+          ;;
+      esac
+    done
+  ' bash "$TMP_SRC" "$TMP_OUT"

@@ -1,0 +1,17 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+source "$HOME/.config/restic/.env"
+
+cd "$HOME"
+
+restic backup \
+  --files-from "$HOME/.config/restic/weekly" \
+  --exclude-file "$HOME/.config/restic/excludes" \
+  --tag weekly
+
+restic forget \
+  --tag weekly \
+  --keep-weekly 8 \
+  --keep-monthly 12 \
+  --prune

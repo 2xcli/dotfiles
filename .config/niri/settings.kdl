@@ -1,0 +1,85 @@
+input {
+    focus-follows-mouse max-scroll-amount="40%"
+    keyboard {
+	repeat-delay 240
+        repeat-rate 45
+        xkb {
+            layout "us,ru"
+            options "grp:alt_shift_toggle"
+        }
+    }
+    mouse {
+        // off
+        // natural-scroll
+        // accel-speed 0.2
+        // accel-profile "flat"
+        // scroll-method "no-scroll"
+    }
+
+}
+
+output "DP-2" {
+    mode "2560x1440@74.924"
+    scale 1
+    transform "normal"
+    position x=1280 y=0
+    background-color "88888866"
+}
+
+overview {
+    backdrop-color "#4c566a90"
+}
+layer-rule {
+    place-within-backdrop true
+}
+
+layout {
+    background-color "00000000"
+    gaps 10
+    // center-focused-column "always"
+    preset-column-widths {
+        proportion 0.25
+        proportion 0.5
+        proportion 0.75
+	
+    }
+    default-column-width { proportion 0.5; }
+    focus-ring {
+//        off
+        width 2
+        active-color "#7fc8ff"
+        inactive-color "#505050"
+    }
+
+    border {
+        // off
+        width 2
+        active-color "#ffffff95"
+        inactive-color "#ffffff20"
+        urgent-color "#9b0000"
+    }
+
+    shadow {
+        on
+        softness 10
+        spread 3
+        offset x=3 y=5
+        color "#0007"
+    }
+
+    struts {
+      //  left 1
+      // right 1
+      //  top -15
+      //  bottom -12
+    }
+}
+
+hotkey-overlay {
+    skip-at-startup
+}
+screenshot-path null
+
+animations {
+    slowdown 1.2
+}

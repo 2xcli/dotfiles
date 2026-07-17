@@ -1,0 +1,87 @@
+#!/usr/bin/env bash
+
+set -eu
+
+LIMIT=100
+MAX_LEN=65
+
+orig="$(mktemp)"
+disp="$(mktemp)"
+
+trap 'rm -f "$orig" "$disp"' EXIT
+
+cliphist list | sed -n "1,${LIMIT}p" > "$orig"
+
+python3 - "$orig" "$disp" "$MAX_LEN" <<'PY'
+import sys
+import re
+
+orig_path, disp_path, max_len = sys.argv[1], sys.argv[2], int(sys.argv[3])
+
+SEP = "\u2063"   # invisible separator
+Z0 = "\u200b"    # zero width space
+Z1 = "\u200c"    # zero width non-joiner
+
+def enc(n: int) -> str:
+    bits = []
+    for i in range(20):
+        bits.append(Z1 if (n >> i) & 1 else Z0)
+    return SEP + "".join(bits)
+
+def pretty(line: str, idx: int) -> str:
+    text = line.split("\t", 1)[1] if "\t" in line else line
+
+    if text.startswith("[[ binary data"):
+        text = text.replace("[[ binary data ", "🖼  ", 1)
+        text = text.removesuffix(" ]]")
+    else:
+        text = re.sub(r"\s+", " ", text).strip()
+        if len(text) > max_len:
+            text = text[:max_len] + "…"
+
+    return text + enc(idx)
+
+with open(orig_path, "r", encoding="utf-8", errors="replace") as f:
+    lines = [line.rstrip("\n") for line in f]
+
+with open(disp_path, "w", encoding="utf-8") as f:
+    for i, line in enumerate(lines):
+        f.write(pretty(line, i) + "\n")
+PY
+
+choice="$(
+    /usr/bin/tofi \
+        -c "$HOME/.config/tofi/configB" \
+        --prompt-text "Clipboard: " \
+        < "$disp"
+)" || exit 0
+
+[ -z "$choice" ] && exit 0
+
+idx="$(
+python3 - "$choice" <<'PY'
+import sys
+
+choice = sys.argv[1]
+
+SEP = "\u2063"
+Z0 = "\u200b"
+Z1 = "\u200c"
+
+if SEP not in choice:
+    sys.exit(1)
+
+bits = choice.split(SEP)[-1]
+n = 0
+
+for i, ch in enumerate(bits[:20]):
+    if ch == Z1:
+        n |= 1 << i
+
+print(n)
+PY
+)" || exit 0
+
+line=$((idx + 1))
+
+sed -n "${line}p" "$orig" | cliphist decode | wl-copy

@@ -1,0 +1,12 @@
+spawn-sh-at-startup "$HOME/.local/bin/cliphist-daemons"
+spawn-sh-at-startup "$HOME/.local/bin/wallpaper-cycle.sh"
+spawn-sh-at-startup "$HOME/.local/bin/v2rayN"
+spawn-sh-at-startup "export $HOME/.zshrc"
+
+spawn-at-startup "keepassxc"
+spawn-at-startup "xwayland-satellite" ":0"
+spawn-at-startup "waybar"
+spawn-at-startup "kitty"
+spawn-at-startup "hypridle"
+spawn-at-startup "64gram-desktop"
+spawn-at-startup "AyuGram"

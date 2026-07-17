@@ -1,0 +1,128 @@
+  ///////////////////////////////////////////////////////////////////////////////
+ /// WINDOW-RULE WINDOW-RULE WINDOW-RULE WINDOW-RULE WINDOW-RULE WINDOW-RULE ///
+///////////////////////////////////////////////////////////////////////////////
+
+workspace "web"
+workspace "touch"
+workspace "working"
+workspace "games"
+
+//////// COMMON RULES ////////
+window-rule {
+    match title="^translate-popup$"
+    open-floating true
+    open-focused true
+    default-column-width { proportion 0.4; }
+    default-window-height { fixed 400; }
+}
+window-rule {
+    match app-id=""
+    open-fullscreen false
+}
+window-rule {
+    draw-border-with-background false
+    geometry-corner-radius 12
+    clip-to-geometry true
+}
+
+//////// common ////////
+window-rule {
+    match app-id="^org.pulseaudio.pavucontrol$"
+   // open-floating true
+    default-column-width { proportion 0.5; }
+    default-window-height { fixed 800; }
+}
+window-rule {
+    match app-id="^org.strawberrymusicplayer.strawberry$"
+    open-floating true
+    default-column-width { proportion 0.5; }
+    default-window-height { fixed 800; }
+}
+window-rule {
+    match app-id="^v2rayN$"
+    open-floating true
+    default-column-width { proportion 0.5; }
+    default-window-height { fixed 800; }
+}
+/-window-rule {
+    match app-id="^libreoffice"
+    default-column-width { proportion 0.5; }
+    open-fullscreen false
+}
+window-rule {
+    match app-id="^kitty$"
+    background-effect {
+	blur true
+	xray false
+    }
+}
+
+//////// web ////////
+window-rule {
+    match app-id=r#"^firefox$|^zen$"# title=r#"Choose User Profile$"#
+    open-floating true
+}
+//////// touch ////////
+window-rule {
+    match app-id=r#"^io.github.tdesktop_x64.TDesktop$|^com.ayugram.desktop$|^org.telegram.desktop"# title=r#"^Mini App"#
+    open-floating true
+}
+
+//////// working ////////
+/- window-rule {
+    match app-id=r#"^tabby$"#
+    open-on-workspace "working"
+    open-floating true
+    default-floating-position x=0 y=100 relative-to="top"
+    default-column-width { proportion 0.5; }
+    default-window-height { fixed 400; }
+}
+
+//////// games ////////
+window-rule {
+    match app-id=r#"^PortProton$|^twintaillauncher$"#
+    open-on-workspace "games"
+    open-floating true
+}
+window-rule {
+    match app-id="^steam_proton$" title="^$"
+    open-on-workspace "games"
+    open-floating true
+    default-floating-position x=20 y=20 relative-to="top"
+}
+window-rule {
+    match app-id="^steam_proton$" title=r#"^NTE$|^HoYoPlay$|^Endfield$"#
+    open-on-workspace "games"
+    open-floating true
+}
+window-rule {
+    match app-id=r#"^steam_proton$"# title=r#"^NTE  |^ZenlessZoneZero$|^Endfield$"#
+    open-on-workspace "games"
+    open-fullscreen true
+}
+window-rule {
+    match app-id=r#"^steam$"# title=r#" "#
+    open-on-workspace "games"
+}
+////// RESOLVE //////
+window-rule {
+    match app-id=r#"^resolve$"# title=r#"i Resolve"#
+    default-column-width { proportion 1.0; }
+}
+window-rule {
+    match app-id=r#"^resolve$"# title=r#"^resolve$"#
+    open-fullscreen true
+}
+window-rule {
+    match app-id=r#"^resolve$"# title=r#"^Find Directory$"#
+    open-fullscreen false
+}
+////// RESOLVE END //////
+
+//////// AT-STARTUP ////////
+window-rule {
+    match at-startup=true app-id=r#"^io.github.tdesktop_x64.TDesktop$|^com.ayugram.desktop$"#
+    default-column-width { proportion 0.5; }
+    open-on-workspace "touch"
+    open-focused false
+}

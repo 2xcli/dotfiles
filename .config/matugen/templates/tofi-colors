@@ -1,0 +1,17 @@
+background-color = {{colors.surface_container.default.hex}}dd
+outline-color = #00000000
+border-color = {{colors.outline.default.hex}}55
+
+text-color = {{colors.on_surface.default.hex}}ee
+prompt-color = {{colors.secondary.default.hex}}cc
+input-color = {{colors.on_surface.default.hex}}ff
+placeholder-color = {{colors.outline.default.hex}}99
+
+default-result-color = {{colors.on_surface.default.hex}}cc
+alternate-result-color = {{colors.on_surface_variant.default.hex}}cc
+
+selection-color = {{colors.on_secondary_container.default.hex}}ff
+selection-background = {{colors.secondary_container.default.hex}}66
+selection-match-color = {{colors.secondary.default.hex}}ff
+
+text-cursor-color = {{colors.secondary.default.hex}}ff

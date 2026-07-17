@@ -1,0 +1,21 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+source "$HOME/.config/restic/.env"
+
+cd "$HOME"
+
+pacman -Qqe > "$HOME/.config/restic/pkglist.txt"
+pacman -Qqm > "$HOME/.config/restic/aur-pkglist.txt"
+
+restic backup \
+  --files-from "$HOME/.config/restic/daily" \
+  --exclude-file "$HOME/.config/restic/excludes" \
+  --tag daily
+
+restic forget \
+  --tag daily \
+  --keep-daily 14 \
+  --keep-weekly 8 \
+  --keep-monthly 12 \
+  --prune

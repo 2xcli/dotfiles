@@ -1,0 +1,33 @@
+@define-color color0 {{colors.surface.default.hex}};
+@define-color color1 {{colors.error.default.hex}};
+@define-color color2 {{colors.secondary.default.hex}};
+@define-color color3 {{colors.tertiary.default.hex}};
+@define-color color4 {{colors.primary.default.hex}};
+@define-color color5 {{colors.primary_container.default.hex}};
+@define-color color6 {{colors.secondary_container.default.hex}};
+@define-color color7 {{colors.on_surface.default.hex}};
+
+@define-color color8 {{colors.surface_variant.default.hex}};
+@define-color color9 {{colors.secondary.default.hex}};
+@define-color color10 {{colors.on_secondary_container.default.hex}};
+@define-color color11 {{colors.on_tertiary_container.default.hex}};
+@define-color color12 {{colors.primary_container.default.hex}};
+@define-color color13 {{colors.tertiary_container.default.hex}};
+@define-color color14 {{colors.secondary_container.default.hex}};
+@define-color color15 {{colors.on_surface.default.hex}};
+
+@define-color bg {{colors.surface.default.hex}};
+@define-color fg {{colors.on_surface.default.hex}};
+@define-color muted {{colors.outline.default.hex}};
+@define-color accent {{colors.secondary.default.hex}};
+@define-color accent_soft {{colors.secondary_container.default.hex}};
+@define-color surface {{colors.surface.default.hex}};
+@define-color surface_container {{colors.surface_container.default.hex}};
+@define-color surface_variant {{colors.surface_variant.default.hex}};
+@define-color warning {{colors.tertiary.default.hex}};
+@define-color error {{colors.error.default.hex}};
+
+@define-color panel_bg alpha(@surface_container, 0.58);
+@define-color panel_shadow alpha(#000000, 0.60);
+@define-color hover_bg alpha(@accent_soft, 0.22);
+@define-color active_bg alpha(@accent_soft, 0.32);

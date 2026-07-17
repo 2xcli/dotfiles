@@ -1,0 +1,18 @@
+#!/usr/bin/env bash
+
+state="$(voxtype status 2>/dev/null || echo idle)"
+
+case "$state" in
+  recording)
+    printf '{"text":"󰍬 REC","tooltip":"Voxtype: recording","class":"recording"}\n'
+    ;;
+  transcribing)
+    printf '{"text":"󰔟 TXT","tooltip":"Voxtype: transcribing","class":"transcribing"}\n'
+    ;;
+  idle|"")
+    printf '{"text":"󰍭","tooltip":"Voxtype: idle","class":"idle"}\n'
+    ;;
+  *)
+    printf '{"text":"󰍭","tooltip":"Voxtype: %s","class":"error"}\n' "$state"
+    ;;
+esac

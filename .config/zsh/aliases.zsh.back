@@ -1,0 +1,68 @@
+# aliases
+alias wtd='vim ~/D/OBSDN/sasidium/Личное/Дэйли/wtd_todo.md'
+alias wpx='vim ~/D/sandbox/proxy'
+alias gcom='vim ~/D/sasidium/Дела/Ворк/Проекты\ \(разработка\)/commit.md'
+alias ccodex='codex --profile code'
+alias ecodex='cd ~/D/Dev/daily && codex --profile eday'
+alias rr='ranger'
+alias ls='eza --icons --group-directories-first'
+alias ll='eza -la --icons --group-directories-first'
+alias la='eza -la --icons --group-directories-first'
+# alias cat='bat'
+alias grep='grep --color=auto'
+
+# PATH
+export PATH="$HOME/.local/bin:$PATH"
+export PATH="/home/boris/.opencode/bin:$PATH"
+export PATH="$PATH:$(go env GOPATH)/bin"
+export EDITOR=vim
+export VISUAL=vim
+
+# proxy
+export http_proxy="http://127.0.0.1:10808"
+export https_proxy="http://127.0.0.1:10808"
+export all_proxy="socks5://127.0.0.1:10808"
+
+export HTTP_PROXY="http://127.0.0.1:10808"
+export HTTPS_PROXY="http://127.0.0.1:10808"
+export ALL_PROXY="socks5://127.0.0.1:10808"
+
+# linuxbrew
+eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
+
+# ===== zsh comfort =====
+
+# prompt
+eval "$(starship init zsh)"
+#eval "$(oh-my-posh init zsh --config "$HOME/.config/oh-my-posh/themes/darkblood.omp.json")"
+
+# history
+HISTFILE=~/.zsh_history
+HISTSIZE=10000
+SAVEHIST=10000
+setopt appendhistory
+setopt sharehistory
+setopt hist_ignore_dups
+setopt hist_ignore_space
+
+# completion
+autoload -Uz compinit
+compinit
+
+zstyle ':completion:*' menu select
+zstyle ':completion:*' matcher-list 'm:{a-z}={A-Z}'
+
+# plugins
+source /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
+source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+
+# fzf
+[ -f /usr/share/fzf/key-bindings.zsh ] && source /usr/share/fzf/key-bindings.zsh
+[ -f /usr/share/fzf/completion.zsh ] && source /usr/share/fzf/completion.zsh
+
+# zoxide
+eval "$(zoxide init zsh)"
+
+# qol
+setopt autocd
+setopt correct
