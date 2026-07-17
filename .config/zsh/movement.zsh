@@ -133,9 +133,6 @@ zle -N smart-forward-word __smart_forward_word
 ZSH_AUTOSUGGEST_PARTIAL_ACCEPT_WIDGETS+=(smart-forward-word)
 
 # key bindings
-bindkey '^[[1;5C' smart-forward-word
-bindkey '^[[1;5D' __smart_backward_word
-bindkey '^H' __smart_backward_kill_word
 bindkey -e
 bindkey '^[[3~' delete-char
 bindkey '^?' backward-delete-char
@@ -145,3 +142,6 @@ bindkey '^[[1~' beginning-of-line
 bindkey '^[[4~' end-of-line
 bindkey '^[[5~' up-line-or-history
 bindkey '^[[6~' down-line-or-history
+bindkey '^[[1;5C' smart-forward-word
+bindkey '^[[1;5D' __smart_backward_word
+bindkey '^H' __smart_backward_kill_word
