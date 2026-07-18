@@ -1,3 +1,5 @@
+[Назад к README.md](../../README.md)
+
 # Telegram theme from Matugen
 
 Автоматически собирает тему Telegram Desktop из акцентного цвета Matugen и
@@ -127,3 +129,5 @@ tail -f ~/.cache/tg-theme/worker.log
 
 В логе должна появиться строка вида `updated: #... → #...`. Если Telegram-сессия
 была отозвана, снова выполни `.venv/bin/python theme.py login`.
+
+[Назад к README.md](../../README.md)
