@@ -1,0 +1,16 @@
+# Copy to config.local.toml. This local file contains credentials and is ignored by Git.
+
+[theme]
+base = "base.tdesktop-theme"
+output = "~/.cache/tg-theme/matugen.tdesktop-theme"
+luminous_config = "~/.config/xdg-desktop-portal-luminous/config.toml"
+chat_background = "#18191d"
+debounce_seconds = 1.5
+
+[telegram]
+api_id = 0
+api_hash = "replace-me"
+slug = "my_matugen_theme"
+title = "My Matugen Theme"
+session = "~/.local/state/tg-theme/theme_owner"
+proxy = "socks5://127.0.0.1:10808"

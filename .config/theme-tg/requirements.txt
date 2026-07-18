@@ -1,0 +1,4 @@
+Pillow==12.2.0
+Telethon==1.44.0
+python-socks==2.8.2
+qrcode==8.2

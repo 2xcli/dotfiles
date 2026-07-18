@@ -1,0 +1,6 @@
+#!/usr/bin/env sh
+set -eu
+
+SCRIPT_PATH="$(readlink -f "$0")"
+TG_THEME_HOME="${TG_THEME_HOME:-$(dirname "$SCRIPT_PATH")}"
+exec "$TG_THEME_HOME/.venv/bin/python" "$TG_THEME_HOME/theme.py" request

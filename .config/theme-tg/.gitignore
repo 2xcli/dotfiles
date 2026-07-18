@@ -1,0 +1,13 @@
+.venv/
+__pycache__/
+*.py[cod]
+
+# Telegram credentials and authorization databases.
+config.local.toml
+*.session
+
+# Generated theme and runtime state.
+out/
+matugen.tdesktop-theme
+*.log
+accent_samples.txt
